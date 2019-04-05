@@ -26,7 +26,7 @@ function getDefaultTitle() {
         return "Deuce?";
     }
     return "MYSTERY TRIVIA?!";
-    
+
 }
 
 function initializeHeaders(argData) {
@@ -142,20 +142,25 @@ function seeInfo() {
 function getSummary() {
     let going = ", ";
     let notGoing = ", ";
+    let goingCount = 0;
+    let notGoingCount = 0;
     for(let i=0; i < data.attendees.length; i++) {
         const user = data.attendees[i];
         const userString = '<@' + user.id + '>';
         if(user.going === true) {
             going += ", " + userString;
+            goingCount++;
         }
         for(let j=0; j<user.pluses; j++) {
             going += ", " + userString + "'s +" + (j+1);
+            goingCount++;
         }
         if(user.going === false) {
             notGoing += ", " + userString;
+            notGoingCount++;
         }
     }
-    return ":thumbsup: " + pollInfo.yes + " "+going.substring(3)+"\n:thumbsdown: " + pollInfo.no + " "+notGoing.substring(3);
+    return ":thumbsup: " + pollInfo.yes + "`"+goingCount+"`\n"+going.substring(3)+"\n:thumbsdown: " + pollInfo.no + "`"+notGoingCount+"`\n"+notGoing.substring(3);
 }
 
 module.exports = function(controller) {
